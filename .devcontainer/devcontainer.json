@@ -1,0 +1,38 @@
+{
+    "name": "CHIP Ubuntu Development Environment",
+    "runArgs": [
+        "--cap-add=SYS_PTRACE",
+        "--security-opt",
+        "seccomp=unconfined",
+        "--network=host"
+    ],
+    "mounts": [
+        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+        "source=~/.ssh,target=~/.ssh,type=bind,readonly",
+        "source=~/.gitconfig,target=~/.gitconfig,type=bind,readonly"
+    ],
+    "build": {
+        "dockerfile": "Dockerfile",
+        "args": {
+            "UBUNTU_VERSION": "20.04"
+        }
+    },
+    "remoteUser": "vscode",
+    // Add the IDs of extensions you want installed when the container is created in the array below.
+    "extensions": [
+        "golang.go",
+        "editorconfig.editorconfig",
+    ],
+    // Use 'settings' to set *default* container specific settings.json values on container create.
+    // You can edit these settings after create using File > Preferences > Settings > Remote.
+//    "settings": {
+//        "terminal.integrated.shell.linux": "/bin/bash"
+//    },
+    "postCreateCommand": "source /usr/share/bash-completion/bash_completion && source /etc/bash_completion.d/git-prompt && sudo chgrp docker /var/run/docker.sock",
+    "remoteEnv": {
+        "GIT_PS1_SHOWDIRTYSTATE": "1",
+        "GIT_PS1_SHOWSTASHSTATE": "1",
+        "GIT_PS1_SHOWCOLORHINTS": "true",
+        "PROMPT_COMMAND": "${localEnv:PROMPT_COMMAND}"
+    }
+}
