@@ -6,10 +6,11 @@
         "seccomp=unconfined",
         "--network=host"
     ],
+    // enable pushing and pulling within container with local credentials
     "mounts": [
         "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
-        "source=~/.ssh,target=~/.ssh,type=bind,readonly",
-        "source=~/.gitconfig,target=~/.gitconfig,type=bind,readonly"
+        "source=${env:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,readonly",
+        "source=${env:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,readonly"
     ],
     "build": {
         "dockerfile": "Dockerfile",
