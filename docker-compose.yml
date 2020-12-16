@@ -1,0 +1,41 @@
+version: "3.8"
+
+x-ubuntu: &ubuntu-build
+  build:
+    dockerfile: docker/Dockerfile
+    context: .
+  stdin_open: true
+  tty: true
+
+services:
+  server:
+    <<: *ubuntu-build
+    networks:
+    - internet
+
+  router1:
+    <<: *ubuntu-build
+    networks:
+    - local_1
+    - internet
+
+  client1:
+    <<: *ubuntu-build
+    networks:
+    - local_1
+
+  router2:
+    <<: *ubuntu-build
+    networks:
+    - internet
+    - local_2
+
+  client2:
+    <<: *ubuntu-build
+    networks:
+    - local_2
+
+networks:
+  internet:
+  local_1:
+  local_2:
