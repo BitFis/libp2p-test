@@ -40,3 +40,7 @@ RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-c
     && curl \
         -L https://raw.githubusercontent.com/docker/compose/1.29.1/contrib/completion/bash/docker-compose \
         -o /etc/bash_completion.d/docker-compose
+
+# install rubygem and tmuxinator for dev
+RUN apt-get install -y rubygems \
+    && gem install tmuxinator

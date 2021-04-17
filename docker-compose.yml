@@ -12,28 +12,43 @@ services:
     <<: *ubuntu-build
     networks:
     - internet
+    command: >
+      "echo 'export PS1='\"'\"'\\u@server:\\w\\$$ '\"'\" >> /root/.bashrc && bash"
+    entrypoint: "/bin/bash -c "
 
   router1:
     <<: *ubuntu-build
     networks:
     - local_1
     - internet
+    command: >
+      "echo 'export PS1='\"'\"'\\u@router1:\\w\\$$ '\"'\" >> /root/.bashrc && bash"
+    entrypoint: "/bin/bash -c "
 
   client1:
     <<: *ubuntu-build
     networks:
     - local_1
+    command: >
+      "echo 'export PS1='\"'\"'\\u@client1:\\w\\$$ '\"'\" >> /root/.bashrc && bash"
+    entrypoint: "/bin/bash -c "
 
   router2:
     <<: *ubuntu-build
     networks:
     - internet
     - local_2
+    command: >
+      "echo 'export PS1='\"'\"'\\u@router2:\\w\\$$ '\"'\" >> /root/.bashrc && bash"
+    entrypoint: "/bin/bash -c "
 
   client2:
     <<: *ubuntu-build
     networks:
     - local_2
+    command: >
+      "echo 'export PS1='\"'\"'\\u@client2:\\w\\$$ '\"'\" >> /root/.bashrc && bash"
+    entrypoint: "/bin/bash -c "
 
 networks:
   internet:

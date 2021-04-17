@@ -1,0 +1,12 @@
+name: Docker demo libp2p
+root: ../
+
+windows:
+  - editor:
+      layout: tiled
+      panes:
+       - docker exec -w /source -it libp2p-test_router2_1 //bin/bash
+       - docker exec -w /source -it libp2p-test_router1_1 //bin/bash
+       - docker exec -w /source -it libp2p-test_server_1 //bin/bash
+       - docker exec -w /source -it libp2p-test_client1_1 //bin/bash
+       - docker exec -w /source -it libp2p-test_client2_1 //bin/bash
