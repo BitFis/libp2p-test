@@ -1,6 +1,8 @@
 # All tools required for compilation belong in chip-build, forms "truth" for CHIP build tooling
 FROM ubuntu:20.04
 
+ARG GO_VERSION=1.16.3
+
 # This Dockerfile contains things useful for an interactive development environment
 ARG USERNAME=vscode
 ARG USER_UID=1000
@@ -25,8 +27,16 @@ RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME
 RUN chmod 0440 /etc/sudoers.d/$USERNAME
 
 # install golang
-RUN cd /tmp && wget https://golang.org/dl/go1.15.4.linux-amd64.tar.gz \
-     && tar -C /usr/local -xzf go1.15.4.linux-amd64.tar.gz \
+RUN cd /tmp && wget https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz \
+     && tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz \
      && export PATH=$PATH:/usr/local/go/bin \
      && rm -rf go1.15.4.linux-amd64.tar.gz \
      && echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+
+# install docker-compose
+RUN curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
+    && chmod +x /usr/local/bin/docker-compose \
+    && ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose \
+    && curl \
+        -L https://raw.githubusercontent.com/docker/compose/1.29.1/contrib/completion/bash/docker-compose \
+        -o /etc/bash_completion.d/docker-compose
