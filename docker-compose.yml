@@ -2,7 +2,7 @@ version: "3.8"
 
 x-ubuntu: &ubuntu-build
   build:
-    dockerfile: docker/Dockerfile
+    dockerfile: etc/docker/Dockerfile
     context: .
   stdin_open: true
   tty: true
